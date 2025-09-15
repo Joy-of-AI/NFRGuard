@@ -1,11 +1,9 @@
-# Bank of Anthos
-
 <!-- Checks badge below seem to take a "neutral" check as a negative and shows failures if some checks are neutral. Commenting out the badge for now. -->
 <!-- ![GitHub branch check runs](https://img.shields.io/github/check-runs/GoogleCloudPlatform/bank-of-anthos/main) -->
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fcymbal-bank.fsi.cymbal.dev%2F&label=live%20demo
 )](https://cymbal-bank.fsi.cymbal.dev)
 
-## Multi-Agent Intelligent Solution
+## Multi-Agent Intelligent Solution on Google's Bank of Anthos Project
 This project extends the original codebase into a multi-agent intelligent solution, adding capabilities such as:
 
 - Autonomous agent interactions
@@ -15,6 +13,8 @@ This project extends the original codebase into a multi-agent intelligent soluti
 
 See [README_NFRGuard.md](README_NFRGuard.md) for details.
 ##
+
+# Bank of Anthos
 
 **Bank of Anthos** is a sample HTTP-based web app that simulates a bank's payment processing network, allowing users to create artificial bank accounts and complete transactions.
 
