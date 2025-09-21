@@ -3,15 +3,41 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fcymbal-bank.fsi.cymbal.dev%2F&label=live%20demo
 )](https://cymbal-bank.fsi.cymbal.dev)
 
-## Multi-Agent Intelligent Solution on Google's Bank of Anthos Project
-This project extends the original codebase into a multi-agent intelligent solution, adding capabilities such as:
+## 🛡️ NFRGuard AI Banking Security System
 
-- Autonomous agent interactions
-- Real-time decision-making
-- Enhanced data processing workflows
-- Integration with external services
+This project extends Bank of Anthos with **7 specialized AI agents** that provide real-time fraud detection, compliance monitoring, and customer protection. It's like having a team of expert security professionals who never sleep, never make mistakes, and get smarter over time.
 
-See [README_NFRGuard.md](README_NFRGuard.md) for details.
+### 🤖 **AI Agents Included**
+- **Transaction Risk Agent** - Detects suspicious transactions in real-time
+- **Compliance Agent** - Ensures 100% AUSTRAC compliance
+- **Resilience Agent** - Takes immediate action on threats
+- **Customer Sentiment Agent** - Monitors customer satisfaction
+- **Data Privacy Agent** - Protects personal information
+- **Knowledge Agent** - Generates human-readable reports
+- **Banking Assistant** - Provides automated customer service
+
+### 📚 **Complete Documentation**
+- **[Architecture Overview](src/agents/01-Architecture-Overview.md)** - How the AI agents work together
+- **[Deployment & Operations](src/agents/04-Deployment-Operations.md)** - Deploy to Google Cloud in minutes
+- **[Demo & Presentation](src/agents/03-Demo-Presentation.md)** - Create compelling demos
+- **[Technical Implementation](src/agents/05-Technical-Implementation.md)** - Deep dive into the code
+- **[Monitoring & Observability](src/agents/02-Monitoring-Observability.md)** - Keep your system healthy
+- **[Project Summary](src/agents/PROJECT_SUMMARY.md)** - Complete project overview
+- **[Architecture Diagram](src/agents/ARCHITECTURE_DIAGRAM.md)** - Visual system design
+
+### 🚀 **Quick Start**
+1. **Deploy Bank of Anthos:** Follow the [Deployment Guide](src/agents/04-Deployment-Operations.md)
+2. **Run AI Agents:** `python src/agents/demo/enhanced_database_monitor.py`
+3. **View Live Demo:** http://34.40.211.236 (if deployed)
+
+### 🎯 **Key Features**
+- **Real-time Fraud Detection** - AI agents analyze every transaction in milliseconds
+- **Automated Compliance** - Ensures 100% AUSTRAC compliance with Australian banking regulations
+- **Customer Sentiment Analysis** - Detects customer frustration and escalates to support
+- **Privacy Protection** - Automatically detects and sanitizes personal information in logs
+- **Proactive Customer Service** - AI handles routine inquiries and escalates complex issues
+- **Multi-agent Coordination** - 7 agents work together using event-driven architecture
+
 ##
 
 # Bank of Anthos

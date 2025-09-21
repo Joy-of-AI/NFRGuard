@@ -1,0 +1,396 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nfrguard-agents
+---
+# Minimal shared ConfigMap for agent configs (override via kustomize or Helm)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nfrguard-agents-config
+  namespace: nfrguard-agents
+data:
+  MSG_PERSIST_PATH: /var/log/nfrguard/.msg_events.jsonl
+  MSG_DLQ_PATH: /var/log/nfrguard/.msg_dlq.jsonl
+  MSG_MAX_RETRIES: "3"
+  MSG_RETRY_DELAY_SEC: "0.05"
+  ANOMALY_THRESHOLD: "0.8"
+  AUSTRAC_THRESHOLD: "10000"
+  # Set to your in-cluster broker endpoint or leave empty for local-only
+  PUBSUB_BROKER_URL: ""
+---
+# Template-style note: replace image with your built image per agent
+# Example agent: transaction-risk-agent
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-risk-agent
+  namespace: nfrguard-agents
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-risk-agent
+  template:
+    metadata:
+      labels:
+        app: transaction-risk-agent
+    spec:
+      containers:
+        - name: transaction-risk-agent
+          image: gcr.io/gen-lang-client-0578497058/transaction-risk-agent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: nfrguard-agents-config
+          env:
+            - name: PYTHONDONTWRITEBYTECODE
+              value: "1"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/nfrguard
+      volumes:
+        - name: logs
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-risk-agent
+  namespace: nfrguard-agents
+spec:
+  selector:
+    app: transaction-risk-agent
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+# compliance-agent
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compliance-agent
+  namespace: nfrguard-agents
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: compliance-agent
+  template:
+    metadata:
+      labels:
+        app: compliance-agent
+    spec:
+      containers:
+        - name: compliance-agent
+          image: gcr.io/gen-lang-client-0578497058/compliance-agent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: nfrguard-agents-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/nfrguard
+      volumes:
+        - name: logs
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: compliance-agent
+  namespace: nfrguard-agents
+spec:
+  selector:
+    app: compliance-agent
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+# resilience-agent
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resilience-agent
+  namespace: nfrguard-agents
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resilience-agent
+  template:
+    metadata:
+      labels:
+        app: resilience-agent
+    spec:
+      containers:
+        - name: resilience-agent
+          image: gcr.io/gen-lang-client-0578497058/resilience-agent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: nfrguard-agents-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/nfrguard
+      volumes:
+        - name: logs
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resilience-agent
+  namespace: nfrguard-agents
+spec:
+  selector:
+    app: resilience-agent
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+# knowledge-agent
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: knowledge-agent
+  namespace: nfrguard-agents
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: knowledge-agent
+  template:
+    metadata:
+      labels:
+        app: knowledge-agent
+    spec:
+      containers:
+        - name: knowledge-agent
+          image: gcr.io/gen-lang-client-0578497058/knowledge-agent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: nfrguard-agents-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/nfrguard
+      volumes:
+        - name: logs
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knowledge-agent
+  namespace: nfrguard-agents
+spec:
+  selector:
+    app: knowledge-agent
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+# customer-sentiment-agent
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-sentiment-agent
+  namespace: nfrguard-agents
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-sentiment-agent
+  template:
+    metadata:
+      labels:
+        app: customer-sentiment-agent
+    spec:
+      containers:
+        - name: customer-sentiment-agent
+          image: gcr.io/gen-lang-client-0578497058/customer-sentiment-agent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: nfrguard-agents-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/nfrguard
+      volumes:
+        - name: logs
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-sentiment-agent
+  namespace: nfrguard-agents
+spec:
+  selector:
+    app: customer-sentiment-agent
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+# data-privacy-agent
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-privacy-agent
+  namespace: nfrguard-agents
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-privacy-agent
+  template:
+    metadata:
+      labels:
+        app: data-privacy-agent
+    spec:
+      containers:
+        - name: data-privacy-agent
+          image: gcr.io/gen-lang-client-0578497058/data-privacy-agent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: nfrguard-agents-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/nfrguard
+      volumes:
+        - name: logs
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-privacy-agent
+  namespace: nfrguard-agents
+spec:
+  selector:
+    app: data-privacy-agent
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+# banking-assistant (optional public service route via Ingress)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking-assistant
+  namespace: nfrguard-agents
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: banking-assistant
+  template:
+    metadata:
+      labels:
+        app: banking-assistant
+    spec:
+      containers:
+        - name: banking-assistant
+          image: gcr.io/gen-lang-client-0578497058/banking-assistant:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: nfrguard-agents-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/nfrguard
+      volumes:
+        - name: logs
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: banking-assistant
+  namespace: nfrguard-agents
+spec:
+  selector:
+    app: banking-assistant
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+# Optional Ingress for public demo (requires GKE Ingress controller)
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: nfrguard-agents-ingress
+#   namespace: nfrguard-agents
+#   annotations:
+#     kubernetes.io/ingress.class: "gce"
+# spec:
+#   rules:
+#     - host: DEMO_HOSTNAME
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: banking-assistant
+#                 port:
+#                   number: 8080
+
