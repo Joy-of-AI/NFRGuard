@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nfrguard-mcp
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mcp-config
+  namespace: nfrguard-mcp
+data:
+  MCP_SERVER_NAME: nfrguard-mcp-server
+  MCP_PORT: "8081"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-server
+  namespace: nfrguard-mcp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mcp-server
+  template:
+    metadata:
+      labels:
+        app: mcp-server
+    spec:
+      containers:
+        - name: mcp-server
+          image: gcr.io/gen-lang-client-0578497058/mcp-servers:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: mcp-config
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mcp-config
+                  key: MCP_PORT
+          ports:
+            - name: http
+              containerPort: 8081
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-server
+  namespace: nfrguard-mcp
+spec:
+  selector:
+    app: mcp-server
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+

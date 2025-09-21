@@ -2,6 +2,9 @@
 from google.adk.agents import Agent
 import requests
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared.messaging import subscribe
 
 ANTHOS_API_BASE = os.getenv("ANTHOS_API_BASE", "http://localhost:8080")
 
@@ -16,10 +19,18 @@ def apply_hold(action_event: dict) -> dict:
             return {"transaction_id": txid, "status": "error", "error": str(e)}
     return {"transaction_id": txid, "status": "no_action"}
 
+def handle_compliance_action(event: dict) -> dict:
+    """Handle compliance.action events from compliance_agent"""
+    print(f"[RESILIENCE] Received compliance action: {event}")
+    return apply_hold(event)
+
+# Subscribe to compliance actions
+subscribe("compliance.action", handle_compliance_action)
+
 root_agent = Agent(
     name="resilience_agent",
     model="gemini-1.5-flash",
     description="Performs operational actions such as placing holds",
     instruction="Receive compliance.action events and call APIs to perform actions",
-    tools=[apply_hold],
+    tools=[apply_hold, handle_compliance_action],
 )
