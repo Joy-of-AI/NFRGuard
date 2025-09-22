@@ -49,7 +49,7 @@ def analyze_sentiment(message: dict) -> dict:
 
 root_agent = Agent(
     name="customer_sentiment_agent",
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     description="Analyzes customer messages for sentiment and trending issues",
     instruction="Process customer messages and flag negative sentiment for ops review",
     tools=[analyze_sentiment],

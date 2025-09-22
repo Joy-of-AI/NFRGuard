@@ -29,7 +29,7 @@ subscribe("compliance.action", handle_compliance_action)
 
 root_agent = Agent(
     name="resilience_agent",
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     description="Performs operational actions such as placing holds",
     instruction="Receive compliance.action events and call APIs to perform actions",
     tools=[apply_hold, handle_compliance_action],

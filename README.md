@@ -5,7 +5,7 @@
 
 ## 🛡️ NFRGuard AI Banking Security System
 
-This project extends Bank of Anthos with **7 specialized AI agents** that provide real-time fraud detection, compliance monitoring, and customer protection. It's like having a team of expert security professionals who never sleep, never make mistakes, and get smarter over time.
+This project extends Bank of Anthos with **7 specialized AI agents** powered by **Gemini 2.5 Flash** that provide real-time fraud detection, compliance monitoring, and customer protection. It's like having a team of expert security professionals who never sleep, never make mistakes, and get smarter over time.
 
 ### 🤖 **AI Agents Included**
 - **Transaction Risk Agent** - Detects suspicious transactions in real-time
@@ -28,7 +28,7 @@ This project extends Bank of Anthos with **7 specialized AI agents** that provid
 ### 🚀 **Quick Start**
 1. **Deploy Bank of Anthos:** Follow the [Deployment Guide](src/agents/04-Deployment-Operations.md)
 2. **Run AI Agents:** `python src/agents/demo/enhanced_database_monitor.py`
-3. **View Live Demo:** http://34.40.211.236 (if deployed)
+3. **View Live Demo:** http://34.40.211.236
 
 ### 🎯 **Key Features**
 - **Real-time Fraud Detection** - AI agents analyze every transaction in milliseconds
@@ -37,6 +37,9 @@ This project extends Bank of Anthos with **7 specialized AI agents** that provid
 - **Privacy Protection** - Automatically detects and sanitizes personal information in logs
 - **Proactive Customer Service** - AI handles routine inquiries and escalates complex issues
 - **Multi-agent Coordination** - 7 agents work together using event-driven architecture
+
+### Solution Architect
+Bank-of-Anthos-Solution-Design.png
 
 ##
 

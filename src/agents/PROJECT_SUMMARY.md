@@ -63,6 +63,8 @@ NFRGuard is an AI-powered banking security system that protects Bank of Anthos 2
 
 ## 🏗️ **Architecture Diagram**
 
+**Complete Architecture Diagram:** [COMPLETE_ARCHITECTURE_DIAGRAM.md](COMPLETE_ARCHITECTURE_DIAGRAM.md)
+
 ### **System Overview**
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
@@ -81,21 +83,21 @@ NFRGuard is an AI-powered banking security system that protects Bank of Anthos 2
 └─────────────────┘    └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### **AI Agent Communication Flow**
+### **AI Agent Communication Flow with Pub/Sub**
 ```
-Transaction Created → Risk Analysis → Compliance Check → Action Taken → Report Generated
-        │                   │               │               │               │
-        ▼                   ▼               ▼               ▼               ▼
-   User makes         Risk Agent        Compliance      Resilience      Knowledge
-   transaction        analyzes          Agent checks    Agent takes     Agent creates
-                      for fraud         regulations     action          human report
+Transaction Created → Pub/Sub Event → Risk Analysis → Compliance Check → Action Taken → Report Generated
+        │                   │               │               │               │               │
+        ▼                   ▼               ▼               ▼               ▼               ▼
+   User makes         Pub/Sub Topic    Risk Agent        Compliance      Resilience      Knowledge
+   transaction        (risk.flagged)   analyzes          Agent checks    Agent takes     Agent creates
+                      (compliance)     for fraud         regulations     action          human report
 ```
 
 ### **Technology Stack**
 - **Frontend:** Flask/Python web application
 - **Infrastructure:** Google Kubernetes Engine (GKE)
 - **AI Framework:** Google Agent Development Kit (ADK)
-- **Communication:** Model Context Protocol (MCP)
+- **Communication:** Google Cloud Pub/Sub + Custom Messaging System
 - **Database:** PostgreSQL with ACID compliance
 - **Monitoring:** Google Cloud Monitoring with custom metrics
 - **Deployment:** Kubernetes with auto-scaling and load balancing

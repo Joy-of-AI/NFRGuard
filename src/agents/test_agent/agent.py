@@ -29,7 +29,7 @@ def add_numbers(a: float, b: float) -> float:
 # Create the root agent
 root_agent = Agent(
     name="test_agent",
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     description="A simple test agent for ADK functionality testing",
     instruction="You are a helpful test agent. You can greet people and perform simple math operations.",
     tools=[hello_world, add_numbers],
