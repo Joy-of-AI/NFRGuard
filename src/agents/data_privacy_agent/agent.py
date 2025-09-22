@@ -41,7 +41,7 @@ def check_privacy_violation(log_entry: dict) -> dict:
 
 root_agent = Agent(
     name="data_privacy_agent",
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     description="Monitors logs and requests for PII violations",
     instruction="Scan log entries and requests for personal information leaks",
     tools=[check_privacy_violation],

@@ -31,7 +31,7 @@ def on_transaction_event(event: dict) -> dict:
 
 root_agent = Agent(
     name="transaction_risk_agent",
-    model="gemini-1.5-flash",   # model optional; agent can be purely procedural
+    model="gemini-2.5-flash",   # model optional; agent can be purely procedural
     description="Detects suspicious transactions and emits risk events",
     instruction="Listen for transaction.created events and check for anomalies.",
     tools=[on_transaction_event],

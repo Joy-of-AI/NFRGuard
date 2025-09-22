@@ -36,7 +36,7 @@ subscribe("ops.alert", handle_ops_alert)
 
 root_agent = Agent(
     name="knowledge_agent",
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     description="Creates human readable alerts for risk events",
     instruction="Generate concise plain-English alerts for risk/compliance events",
     tools=[explain_event, handle_risk_event, handle_compliance_event, handle_ops_alert]

@@ -32,6 +32,13 @@ Welcome to NFRGuard - your AI-powered security team that protects Bank of Anthos
 - Troubleshoot common problems
 - Scale and manage your infrastructure
 
+### 🧠 **[RAG System](RAG/README.md)**
+**Learn about:**
+- Retrieval-Augmented Generation with Australian banking regulations
+- How agents access real regulatory documents
+- Vertex AI Vector Search integration
+- Regulatory compliance and transparency
+
 ### 🔧 **[Technical Implementation](05-Technical-Implementation.md)**
 **Dive deep into:**
 - How each agent is actually implemented
@@ -77,6 +84,8 @@ Welcome to NFRGuard - your AI-powered security team that protects Bank of Anthos
 - Live compliance monitoring active
 - Privacy protection monitoring logs
 - Customer sentiment analysis ready
+- **RAG-Enhanced Decisions** - Agents access real Australian banking regulations
+- **Regulatory Transparency** - Every decision backed by actual regulatory guidance
 - URL: http://34.40.211.236
 - Status: Running on GKE in Australia
 - Agents react to real transactions in real-time
@@ -688,7 +697,7 @@ agents/
 ## ✅ Contest Compliance Checklist
 
 - **Platform**: Targets GKE; Kubernetes manifests included under `src/agents/k8s/`
-- **Google AI Models**: Uses Gemini models via ADK-configured agents
+- **Google AI Models**: Uses Gemini 2.5 Flash via ADK-configured agents
 - **ADK**: Adopted for agent structure and tooling
 - **MCP**: Planned; minimal server manifest provided (`k8s/mcp-server.yaml`) — Phase 2
 - **A2A**: Not used by design; rationale documented (Pub/Sub chosen)
@@ -699,7 +708,7 @@ agents/
 ## 📄 Third-Party Notices
 
 - **Google ADK** — Licensed per Google terms
-- **Google AI (Gemini)** — Subject to Google AI usage terms
+- **Google AI (Gemini 2.5 Flash)** — Subject to Google AI usage terms
 - **Optional brokers** (e.g., Google Cloud Pub/Sub, NATS, Redis) — Use under their licenses
 - Ensure environment usage complies with each provider’s T&Cs and your org policies.
 

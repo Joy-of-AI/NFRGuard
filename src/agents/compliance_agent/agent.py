@@ -32,7 +32,7 @@ subscribe("risk.flagged", handle_risk_event)
 
 root_agent = Agent(
     name="compliance_agent",
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     description="Applies regulatory checks and emits compliance actions",
     instruction="Receive risk.flagged events and determine regulatory actions",
     tools=[compliance_check, handle_risk_event],
