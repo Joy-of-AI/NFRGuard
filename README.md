@@ -39,7 +39,7 @@ This project extends Bank of Anthos with **7 specialized AI agents** powered by 
 - **Multi-agent Coordination** - 7 agents work together using event-driven architecture
 
 ### Solution Architect
-Bank-of-Anthos-Solution-Design.png
+<img width="1172" height="731" alt="Bank-of-Anthos-Solution-Design" src="https://github.com/user-attachments/assets/a452a3d3-c069-4281-bcf0-18de6da70082" />
 
 ##
 
