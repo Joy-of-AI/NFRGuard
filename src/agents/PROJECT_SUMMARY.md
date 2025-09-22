@@ -22,8 +22,8 @@ NFRGuard is an AI-powered banking security system that protects Bank of Anthos 2
 ### **Technologies Used**
 - **Google Kubernetes Engine (GKE)** - Container orchestration and auto-scaling
 - **Google Agent Development Kit (ADK)** - AI agent framework and management
-- **Model Context Protocol (MCP)** - Standardized agent communication
-- **Agent-to-Agent (A2A)** - Inter-agent messaging and coordination
+- **Google Cloud Pub/Sub** - Event-driven agent communication
+- **Custom Messaging System** - Decoupled inter-agent messaging and coordination
 - **PostgreSQL** - Transaction and user data storage
 - **Google Cloud Monitoring** - Real-time metrics and alerting
 - **Python/Java** - Microservices implementation
@@ -145,7 +145,7 @@ Transaction Created → Pub/Sub Event → Risk Analysis → Compliance Check →
 ## 🎯 **Future Enhancements**
 
 ### **Planned Improvements**
-- **MCP Integration** - Enhanced agent communication using Model Context Protocol
+- **Enhanced Pub/Sub Integration** - Further optimization of event-driven communication
 - **Machine Learning** - Continuous improvement of fraud detection models
 - **Additional Agents** - Expand to cover more banking security scenarios
 - **Multi-region Deployment** - Global deployment for international banking

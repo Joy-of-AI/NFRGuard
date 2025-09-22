@@ -144,8 +144,8 @@
 ### **Core Technologies**
 - **Google Kubernetes Engine (GKE)** - Container orchestration
 - **Google Agent Development Kit (ADK)** - AI agent framework
-- **Model Context Protocol (MCP)** - Agent communication
-- **Agent-to-Agent (A2A)** - Inter-agent messaging
+- **Google Cloud Pub/Sub** - Event-driven agent communication
+- **Custom Messaging System** - Decoupled inter-agent messaging
 
 ### **Data Sources**
 - **Bank of Anthos Transaction Data** - Real banking transactions

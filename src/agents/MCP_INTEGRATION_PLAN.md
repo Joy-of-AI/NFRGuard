@@ -1,8 +1,10 @@
-# 🔗 MCP Integration Plan (Advanced)
+# 🔗 MCP Integration Plan (Future Enhancement)
 
-> **Note:** This is an advanced technical document. For basic usage, start with the [Architecture Overview](01-Architecture-Overview.md) and [Technical Implementation](05-Technical-Implementation.md) guides.
+> **Note:** This is a **FUTURE ENHANCEMENT** document. MCP is **NOT IMPLEMENTED** in the current system. The current implementation uses **Google Cloud Pub/Sub** for agent communication. For the actual implementation, see the [Architecture Overview](01-Architecture-Overview.md) and [Technical Implementation](05-Technical-Implementation.md) guides.
 
-# MCP Integration for NFRGuard
+# Future MCP Integration for NFRGuard
+
+**⚠️ IMPORTANT: This is a planning document only. The current system uses Pub/Sub for agent communication, not MCP.**
 
 ## 🎯 **MCP Integration Points**
 
@@ -365,4 +367,4 @@ mcp-servers/
 4. **Implement MCP Orchestrator** - Central coordination
 5. **Migrate Remaining Agents** - Gradual migration
 
-MCP will transform your NFRGuard system into a more scalable, maintainable, and interoperable multi-agent platform! 🚀
+**Note: This MCP integration is a future enhancement. The current NFRGuard system successfully uses Pub/Sub for agent communication and is production-ready! 🚀**
