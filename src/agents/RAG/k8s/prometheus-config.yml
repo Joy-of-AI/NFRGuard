@@ -1,0 +1,28 @@
+
+# Prometheus configuration for RAG system monitoring
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'nfrguard-agents'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - nfrguard-agents
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: '.*-agent'
+      - source_labels: [__meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: 'http'
+
+rule_files:
+  - "rag_alerts.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093

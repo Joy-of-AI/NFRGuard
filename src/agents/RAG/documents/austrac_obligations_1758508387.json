@@ -1,0 +1,24 @@
+{
+  "title": "AML/CTF Obligations, Record-keeping, Customer ID",
+  "regulator": "austrac",
+  "url": "https://www.austrac.gov.au/business/your-obligations",
+  "content": "\n        AUSTRAC AML/CTF OBLIGATIONS\n        \n        1. CUSTOMER DUE DILIGENCE (CDD)\n        Reporting entities must conduct customer due diligence including:\n        (a) verifying customer identity;\n        (b) understanding the nature and purpose of the business relationship;\n        (c) conducting ongoing monitoring of the business relationship;\n        (d) keeping records of customer identification and verification; and\n        (e) conducting enhanced customer due diligence for high-risk customers.\n        \n        2. SUSPICIOUS MATTER REPORTING\n        Reporting entities must report suspicious matters to AUSTRAC when:\n        (a) they suspect on reasonable grounds that a transaction may be related to money laundering or terrorism financing;\n        (b) they have reasonable grounds to suspect that a transaction is suspicious;\n        (c) they are required to do so under the AML/CTF Act; or\n        (d) they have information that may assist in the investigation of money laundering or terrorism financing.\n        \n        3. TRANSACTION MONITORING\n        Reporting entities must have transaction monitoring systems that:\n        (a) identify unusual or suspicious transactions;\n        (b) monitor transactions against customer profiles;\n        (c) use automated systems where appropriate;\n        (d) have manual review processes for complex cases;\n        (e) maintain records of monitoring activities; and\n        (f) regularly review and update monitoring systems.\n        \n        4. RECORD KEEPING\n        Reporting entities must keep records of:\n        (a) customer identification and verification;\n        (b) transactions and related documents;\n        (c) suspicious matter reports;\n        (d) AML/CTF program activities;\n        (e) staff training and awareness; and\n        (f) risk assessments and reviews.\n        \n        5. THRESHOLD TRANSACTIONS\n        Reporting entities must report threshold transactions including:\n        (a) cash transactions of $10,000 or more;\n        (b) international transfers of $10,000 or more;\n        (c) bearer negotiable instruments of $10,000 or more; and\n        (d) other transactions as specified in the AML/CTF Act.\n        ",
+  "sections": [
+    "suspicious_transactions",
+    "kyc",
+    "record_keeping",
+    "monitoring"
+  ],
+  "agent_focus": [
+    "transaction_risk",
+    "compliance",
+    "data_privacy"
+  ],
+  "relevance": "high",
+  "document_type": "obligations",
+  "metadata": {
+    "download_date": "2025-09-22",
+    "source_url": "https://www.austrac.gov.au/business/your-obligations",
+    "regulator_full_name": "Australian Transaction Reports and Analysis Centre"
+  }
+}

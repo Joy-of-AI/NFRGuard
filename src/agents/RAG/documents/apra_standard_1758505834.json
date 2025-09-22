@@ -1,0 +1,24 @@
+{
+  "title": "Prudential Standard CPS 230 Operational Risk Management",
+  "regulator": "apra",
+  "url": "https://www.apra.gov.au/sites/default/files/2023-07/Prudential%20Standard%20CPS%20230%20Operational%20Risk%20Management%20-%20clean.pdf",
+  "content": "\n        PRUDENTIAL STANDARD CPS 230 OPERATIONAL RISK MANAGEMENT\n        \n        1. OBJECTIVE\n        This Prudential Standard requires an APRA-regulated entity to maintain a sound operational risk management framework to identify, assess, monitor, control and mitigate operational risks.\n        \n        2. SCOPE OF APPLICATION\n        This Prudential Standard applies to all APRA-regulated entities.\n        \n        3. OPERATIONAL RISK MANAGEMENT FRAMEWORK\n        An APRA-regulated entity must maintain a sound operational risk management framework that includes:\n        (a) operational risk appetite and tolerance;\n        (b) operational risk identification, assessment, monitoring and control;\n        (c) operational risk incident management;\n        (d) business continuity management;\n        (e) information and communication technology risk management;\n        (f) third-party risk management;\n        (g) operational risk reporting; and\n        (h) operational risk governance.\n        \n        4. OPERATIONAL RISK INCIDENT MANAGEMENT\n        An APRA-regulated entity must have effective operational risk incident management processes that:\n        (a) identify, assess and report operational risk incidents;\n        (b) investigate significant operational risk incidents;\n        (c) implement appropriate corrective actions;\n        (d) monitor the effectiveness of corrective actions; and\n        (e) maintain records of operational risk incidents and corrective actions.\n        \n        5. BUSINESS CONTINUITY MANAGEMENT\n        An APRA-regulated entity must maintain business continuity management processes that:\n        (a) identify critical business functions and supporting infrastructure;\n        (b) assess business continuity risks;\n        (c) develop and maintain business continuity plans;\n        (d) test business continuity plans regularly;\n        (e) maintain alternative arrangements for critical business functions; and\n        (f) communicate business continuity arrangements to relevant personnel.\n        ",
+  "sections": [
+    "operational_risk",
+    "legal_risk",
+    "compliance_risk",
+    "technology_risk"
+  ],
+  "agent_focus": [
+    "transaction_risk",
+    "compliance",
+    "resilience"
+  ],
+  "relevance": "high",
+  "document_type": "standard",
+  "metadata": {
+    "download_date": "2025-09-22",
+    "source_url": "https://www.apra.gov.au/sites/default/files/2023-07/Prudential%20Standard%20CPS%20230%20Operational%20Risk%20Management%20-%20clean.pdf",
+    "regulator_full_name": "Australian Prudential Regulation Authority"
+  }
+}

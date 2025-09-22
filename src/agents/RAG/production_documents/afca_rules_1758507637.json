@@ -1,0 +1,22 @@
+{
+  "title": "AFCA Rules and Guidelines",
+  "regulator": "afca",
+  "url": "https://www.afca.org.au/rules-and-guidelines",
+  "content": "\n        AFCA RULES AND GUIDELINES\n        \n        1. COMPLAINT HANDLING\n        AFCA expects financial firms to handle complaints fairly and efficiently:\n        (a) acknowledge complaints promptly;\n        (b) investigate complaints thoroughly;\n        (c) provide clear explanations of decisions;\n        (d) offer appropriate remedies where warranted;\n        (e) maintain records of complaints and responses; and\n        (f) learn from complaints to improve services.\n        \n        2. CUSTOMER COMMUNICATION\n        Financial firms should communicate with customers in a way that is:\n        (a) clear and understandable;\n        (b) timely and responsive;\n        (c) honest and transparent;\n        (d) respectful and professional;\n        (e) appropriate to the customer's circumstances; and\n        (f) compliant with relevant laws and regulations.\n        \n        3. DISPUTE RESOLUTION\n        AFCA provides dispute resolution services including:\n        (a) conciliation and mediation;\n        (b) investigation and determination;\n        (c) binding decisions where appropriate;\n        (d) enforcement of decisions;\n        (e) systemic issue identification; and\n        (f) education and guidance.\n        \n        4. EVIDENCE REQUIREMENTS\n        Financial firms should provide evidence that is:\n        (a) relevant to the complaint;\n        (b) accurate and complete;\n        (c) properly documented;\n        (d) available when requested;\n        (e) protected from unauthorised access; and\n        (f) retained for appropriate periods.\n        \n        5. REMEDIES AND COMPENSATION\n        AFCA may recommend or require remedies including:\n        (a) apologies and acknowledgments;\n        (b) corrections of errors;\n        (c) refunds and compensation;\n        (d) changes to policies and procedures;\n        (e) staff training and development; and\n        (f) systemic improvements.\n        ",
+  "sections": [
+    "complaint_handling",
+    "customer_communication",
+    "dispute_resolution"
+  ],
+  "agent_focus": [
+    "banking_assistant",
+    "customer_sentiment"
+  ],
+  "relevance": "high",
+  "document_type": "rules",
+  "metadata": {
+    "download_date": "2025-09-22",
+    "source_url": "https://www.afca.org.au/rules-and-guidelines",
+    "regulator_full_name": "Australian Financial Complaints Authority"
+  }
+}
