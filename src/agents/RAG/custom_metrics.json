@@ -1,0 +1,58 @@
+[
+  {
+    "name": "nfrguard/agent/response_time",
+    "description": "AI agent response time in milliseconds",
+    "labels": [
+      {
+        "key": "agent_name",
+        "description": "Name of the AI agent"
+      },
+      {
+        "key": "operation",
+        "description": "Type of operation performed"
+      }
+    ]
+  },
+  {
+    "name": "nfrguard/agent/risk_score",
+    "description": "Risk score calculated by transaction risk agent",
+    "labels": [
+      {
+        "key": "agent_name",
+        "description": "Name of the AI agent"
+      },
+      {
+        "key": "risk_level",
+        "description": "Risk level (low, medium, high)"
+      }
+    ]
+  },
+  {
+    "name": "nfrguard/rag/query_latency",
+    "description": "RAG system query latency in milliseconds",
+    "labels": [
+      {
+        "key": "query_type",
+        "description": "Type of RAG query"
+      },
+      {
+        "key": "agent_name",
+        "description": "Agent making the query"
+      }
+    ]
+  },
+  {
+    "name": "nfrguard/rag/confidence_score",
+    "description": "RAG system confidence score",
+    "labels": [
+      {
+        "key": "query_type",
+        "description": "Type of RAG query"
+      },
+      {
+        "key": "agent_name",
+        "description": "Agent making the query"
+      }
+    ]
+  }
+]

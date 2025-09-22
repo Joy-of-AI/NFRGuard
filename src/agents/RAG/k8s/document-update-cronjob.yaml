@@ -1,0 +1,32 @@
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: rag-document-update
+  namespace: nfrguard-agents
+spec:
+  schedule: "0 2 * * *"  # Daily at 2:00 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: document-updater
+            image: gcr.io/PROJECT_ID/rag-document-updater:latest
+            env:
+            - name: GOOGLE_CLOUD_PROJECT
+              value: "your-project-id"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/var/secrets/google/key.json"
+            command:
+            - python
+            - update_documents.py
+            volumeMounts:
+            - name: service-account
+              mountPath: /var/secrets/google
+              readOnly: true
+          volumes:
+          - name: service-account
+            secret:
+              secretName: google-service-account
+          restartPolicy: OnFailure

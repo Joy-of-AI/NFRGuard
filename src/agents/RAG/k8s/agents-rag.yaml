@@ -1,0 +1,835 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nfrguard-agents
+  labels:
+    name: nfrguard-agents
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nfrguard-config
+  namespace: nfrguard-agents
+data:
+  # RAG System Configuration
+  RAG_ENABLED: "true"
+  GOOGLE_CLOUD_PROJECT: "your-project-id"
+  VECTOR_INDEX_ID: "your-index-id"
+  VECTOR_ENDPOINT_ID: "your-endpoint-id"
+  DEPLOYED_INDEX_ID: "nfrguard-deployed-index"
+  
+  # Agent Configuration
+  AGENT_TIMEOUT: "30"
+  MAX_RETRIES: "3"
+  CACHE_TTL: "300"
+  
+  # Monitoring Configuration
+  METRICS_NAMESPACE: "nfrguard/rag"
+  LOG_LEVEL: "INFO"
+  
+  # Performance Configuration
+  MAX_CONCURRENT_QUERIES: "100"
+  QUERY_BATCH_SIZE: "10"
+  EMBEDDING_BATCH_SIZE: "50"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-risk-agent
+  namespace: nfrguard-agents
+  labels:
+    app: transaction-risk-agent
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: transaction-risk-agent
+  template:
+    metadata:
+      labels:
+        app: transaction-risk-agent
+        version: v1
+    spec:
+      containers:
+      - name: transaction-risk-agent
+        image: gcr.io/PROJECT_ID/transaction-risk-agent:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GOOGLE_CLOUD_PROJECT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: GOOGLE_CLOUD_PROJECT
+        - name: RAG_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: RAG_ENABLED
+        - name: VECTOR_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_INDEX_ID
+        - name: VECTOR_ENDPOINT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_ENDPOINT_ID
+        - name: DEPLOYED_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: DEPLOYED_INDEX_ID
+        - name: AGENT_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: AGENT_TIMEOUT
+        - name: MAX_RETRIES
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: MAX_RETRIES
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: LOG_LEVEL
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: service-account
+          mountPath: /var/secrets/google
+          readOnly: true
+      volumes:
+      - name: service-account
+        secret:
+          secretName: google-service-account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-risk-agent
+  namespace: nfrguard-agents
+  labels:
+    app: transaction-risk-agent
+spec:
+  selector:
+    app: transaction-risk-agent
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compliance-agent
+  namespace: nfrguard-agents
+  labels:
+    app: compliance-agent
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: compliance-agent
+  template:
+    metadata:
+      labels:
+        app: compliance-agent
+        version: v1
+    spec:
+      containers:
+      - name: compliance-agent
+        image: gcr.io/PROJECT_ID/compliance-agent:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GOOGLE_CLOUD_PROJECT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: GOOGLE_CLOUD_PROJECT
+        - name: RAG_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: RAG_ENABLED
+        - name: VECTOR_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_INDEX_ID
+        - name: VECTOR_ENDPOINT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_ENDPOINT_ID
+        - name: DEPLOYED_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: DEPLOYED_INDEX_ID
+        - name: AGENT_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: AGENT_TIMEOUT
+        - name: MAX_RETRIES
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: MAX_RETRIES
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: LOG_LEVEL
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: service-account
+          mountPath: /var/secrets/google
+          readOnly: true
+      volumes:
+      - name: service-account
+        secret:
+          secretName: google-service-account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: compliance-agent
+  namespace: nfrguard-agents
+  labels:
+    app: compliance-agent
+spec:
+  selector:
+    app: compliance-agent
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resilience-agent
+  namespace: nfrguard-agents
+  labels:
+    app: resilience-agent
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: resilience-agent
+  template:
+    metadata:
+      labels:
+        app: resilience-agent
+        version: v1
+    spec:
+      containers:
+      - name: resilience-agent
+        image: gcr.io/PROJECT_ID/resilience-agent:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GOOGLE_CLOUD_PROJECT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: GOOGLE_CLOUD_PROJECT
+        - name: RAG_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: RAG_ENABLED
+        - name: VECTOR_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_INDEX_ID
+        - name: VECTOR_ENDPOINT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_ENDPOINT_ID
+        - name: DEPLOYED_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: DEPLOYED_INDEX_ID
+        - name: AGENT_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: AGENT_TIMEOUT
+        - name: MAX_RETRIES
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: MAX_RETRIES
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: LOG_LEVEL
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: service-account
+          mountPath: /var/secrets/google
+          readOnly: true
+      volumes:
+      - name: service-account
+        secret:
+          secretName: google-service-account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resilience-agent
+  namespace: nfrguard-agents
+  labels:
+    app: resilience-agent
+spec:
+  selector:
+    app: resilience-agent
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-sentiment-agent
+  namespace: nfrguard-agents
+  labels:
+    app: customer-sentiment-agent
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: customer-sentiment-agent
+  template:
+    metadata:
+      labels:
+        app: customer-sentiment-agent
+        version: v1
+    spec:
+      containers:
+      - name: customer-sentiment-agent
+        image: gcr.io/PROJECT_ID/customer-sentiment-agent:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GOOGLE_CLOUD_PROJECT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: GOOGLE_CLOUD_PROJECT
+        - name: RAG_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: RAG_ENABLED
+        - name: VECTOR_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_INDEX_ID
+        - name: VECTOR_ENDPOINT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_ENDPOINT_ID
+        - name: DEPLOYED_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: DEPLOYED_INDEX_ID
+        - name: AGENT_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: AGENT_TIMEOUT
+        - name: MAX_RETRIES
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: MAX_RETRIES
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: LOG_LEVEL
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: service-account
+          mountPath: /var/secrets/google
+          readOnly: true
+      volumes:
+      - name: service-account
+        secret:
+          secretName: google-service-account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-sentiment-agent
+  namespace: nfrguard-agents
+  labels:
+    app: customer-sentiment-agent
+spec:
+  selector:
+    app: customer-sentiment-agent
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-privacy-agent
+  namespace: nfrguard-agents
+  labels:
+    app: data-privacy-agent
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: data-privacy-agent
+  template:
+    metadata:
+      labels:
+        app: data-privacy-agent
+        version: v1
+    spec:
+      containers:
+      - name: data-privacy-agent
+        image: gcr.io/PROJECT_ID/data-privacy-agent:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GOOGLE_CLOUD_PROJECT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: GOOGLE_CLOUD_PROJECT
+        - name: RAG_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: RAG_ENABLED
+        - name: VECTOR_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_INDEX_ID
+        - name: VECTOR_ENDPOINT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_ENDPOINT_ID
+        - name: DEPLOYED_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: DEPLOYED_INDEX_ID
+        - name: AGENT_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: AGENT_TIMEOUT
+        - name: MAX_RETRIES
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: MAX_RETRIES
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: LOG_LEVEL
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: service-account
+          mountPath: /var/secrets/google
+          readOnly: true
+      volumes:
+      - name: service-account
+        secret:
+          secretName: google-service-account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-privacy-agent
+  namespace: nfrguard-agents
+  labels:
+    app: data-privacy-agent
+spec:
+  selector:
+    app: data-privacy-agent
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: knowledge-agent
+  namespace: nfrguard-agents
+  labels:
+    app: knowledge-agent
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: knowledge-agent
+  template:
+    metadata:
+      labels:
+        app: knowledge-agent
+        version: v1
+    spec:
+      containers:
+      - name: knowledge-agent
+        image: gcr.io/PROJECT_ID/knowledge-agent:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GOOGLE_CLOUD_PROJECT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: GOOGLE_CLOUD_PROJECT
+        - name: RAG_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: RAG_ENABLED
+        - name: VECTOR_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_INDEX_ID
+        - name: VECTOR_ENDPOINT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_ENDPOINT_ID
+        - name: DEPLOYED_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: DEPLOYED_INDEX_ID
+        - name: AGENT_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: AGENT_TIMEOUT
+        - name: MAX_RETRIES
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: MAX_RETRIES
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: LOG_LEVEL
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: service-account
+          mountPath: /var/secrets/google
+          readOnly: true
+      volumes:
+      - name: service-account
+        secret:
+          secretName: google-service-account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knowledge-agent
+  namespace: nfrguard-agents
+  labels:
+    app: knowledge-agent
+spec:
+  selector:
+    app: knowledge-agent
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking-assistant-agent
+  namespace: nfrguard-agents
+  labels:
+    app: banking-assistant-agent
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: banking-assistant-agent
+  template:
+    metadata:
+      labels:
+        app: banking-assistant-agent
+        version: v1
+    spec:
+      containers:
+      - name: banking-assistant-agent
+        image: gcr.io/PROJECT_ID/banking-assistant-agent:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GOOGLE_CLOUD_PROJECT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: GOOGLE_CLOUD_PROJECT
+        - name: RAG_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: RAG_ENABLED
+        - name: VECTOR_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_INDEX_ID
+        - name: VECTOR_ENDPOINT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: VECTOR_ENDPOINT_ID
+        - name: DEPLOYED_INDEX_ID
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: DEPLOYED_INDEX_ID
+        - name: AGENT_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: AGENT_TIMEOUT
+        - name: MAX_RETRIES
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: MAX_RETRIES
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: nfrguard-config
+              key: LOG_LEVEL
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: service-account
+          mountPath: /var/secrets/google
+          readOnly: true
+      volumes:
+      - name: service-account
+        secret:
+          secretName: google-service-account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: banking-assistant-agent
+  namespace: nfrguard-agents
+  labels:
+    app: banking-assistant-agent
+spec:
+  selector:
+    app: banking-assistant-agent
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: google-service-account
+  namespace: nfrguard-agents
+type: Opaque
+data:
+  # Base64 encoded service account JSON
+  # kubectl create secret generic google-service-account --from-file=key.json=path/to/service-account.json
+  key.json: ""

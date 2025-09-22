@@ -1,0 +1,39 @@
+
+groups:
+  - name: rag_system
+    rules:
+      - alert: RAGLowConfidence
+        expr: rag_confidence_score < 0.3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RAG confidence scores are low"
+          description: "RAG queries are returning confidence scores below 0.3"
+      
+      - alert: RAGHighLatency
+        expr: rag_query_latency > 1.0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RAG query latency is high"
+          description: "RAG queries are taking longer than 1 second"
+      
+      - alert: RAGDocumentCoverageLow
+        expr: rag_document_coverage < 5
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "RAG document coverage is insufficient"
+          description: "RAG system has fewer than 5 documents"
+      
+      - alert: AgentHealthDegraded
+        expr: agent_health_percentage < 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Agent health is degraded"
+          description: "Agent health is below 80%"
