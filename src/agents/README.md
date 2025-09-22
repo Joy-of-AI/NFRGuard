@@ -687,8 +687,8 @@ agents/
 │   └── messaging.py          # Event messaging system
 ├── test_agent/               # Test agent for development
 ├── test_messaging.py         # Messaging system tests
-├── mcp_integration_example.py # MCP integration example
-├── MCP_INTEGRATION_PLAN.md   # MCP integration plan
+├── mcp_integration_example.py # Future MCP integration example (not implemented)
+├── MCP_INTEGRATION_PLAN.md   # Future MCP integration plan (not implemented)
 ├── AGENT_COMMUNICATION_FLOW.md # Communication flow diagrams
 ├── AGENT_MESSAGE_FLOW.md     # Message flow documentation
 └── README.md                 # This file
@@ -699,8 +699,8 @@ agents/
 - **Platform**: Targets GKE; Kubernetes manifests included under `src/agents/k8s/`
 - **Google AI Models**: Uses Gemini 2.5 Flash via ADK-configured agents
 - **ADK**: Adopted for agent structure and tooling
-- **MCP**: Planned; minimal server manifest provided (`k8s/mcp-server.yaml`) — Phase 2
-- **A2A**: Not used by design; rationale documented (Pub/Sub chosen)
+- **MCP**: Not implemented; Pub/Sub chosen for agent communication
+- **A2A**: Not used by design; Pub/Sub provides better scalability and decoupling
 - **New Work**: All agent code under `src/agents` created during contest period
 - **Testing Access**: Provide public demo URL or test build + creds (see below)
 - **Third-Party Terms**: Noted below; ensure licenses and usage comply
@@ -730,14 +730,14 @@ agents/
    gcloud builds submit --tag gcr.io/PROJECT_ID/customer-sentiment-agent src/agents/customer_sentiment_agent
    gcloud builds submit --tag gcr.io/PROJECT_ID/data-privacy-agent src/agents/data_privacy_agent
    gcloud builds submit --tag gcr.io/PROJECT_ID/banking-assistant src/agents/banking_assistant_agent
-   # Optional MCP server
-   gcloud builds submit --tag gcr.io/PROJECT_ID/mcp-server mcp-servers/minimal
+   # Future MCP server (not implemented)
+   # gcloud builds submit --tag gcr.io/PROJECT_ID/mcp-server mcp-servers/minimal
    ```
 2. Create cluster and deploy:
    ```bash
    gcloud container clusters create nfrguard --region=us-central1 --num-nodes=2
    kubectl apply -f src/agents/k8s/agents.yaml
-   kubectl apply -f src/agents/k8s/mcp-server.yaml   # optional
+   # kubectl apply -f src/agents/k8s/mcp-server.yaml   # future MCP server (not implemented)
    ```
 3. (Optional) Expose public demo via Ingress (edit `agents.yaml` Ingress block and set DNS)
 4. Get service endpoints:
@@ -751,7 +751,7 @@ agents/
 
 - Storyboard: Transaction flow (Risk→Compliance→Resilience), Sentiment and Privacy flows, Knowledge alerts
 - Show logs from `shared/messaging.py` (publish/subscribe), then UI/API response
-- Close with architecture and "Why Pub/Sub, Why not A2A/MCP now" slide
+- Close with architecture and "Why Pub/Sub for Agent Communication" slide
 
 
 
