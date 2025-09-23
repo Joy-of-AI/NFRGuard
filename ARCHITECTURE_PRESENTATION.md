@@ -521,3 +521,4 @@ Customer Message → Sentiment Agent → RAG Enhancement → Escalation Decision
 ---
 
 *This architecture overview provides a comprehensive understanding of the NFRGuard AI Banking Security System. The solution represents a production-ready, scalable, and secure approach to AI-powered banking operations with full regulatory compliance and operational excellence.*
+
