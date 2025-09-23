@@ -501,7 +501,7 @@ python test_messaging.py
 
 ```bash
 # Messaging Configuration
-LOCAL_BROKER_URL=http://localhost:8080  # Optional external broker
+LOCAL_BROKER_URL=http://localhost:8080  # External broker
 ANOMALY_THRESHOLD=0.8                  # Risk detection threshold
 AUSTRAC_THRESHOLD=10000                # Compliance threshold
 ANTHOS_API_BASE=http://localhost:8080  # Bank of Anthos API base
@@ -518,7 +518,7 @@ kubectl apply -f transaction_risk_agent/k8s/
 kubectl apply -f compliance_agent/k8s/
 ```
 
-## 🔧 Development Guidelines
+## 🔧 Development Steps Used in This Project
 
 ### **Adding New Agents**
 
@@ -709,17 +709,17 @@ agents/
 
 - **Google ADK** — Licensed per Google terms
 - **Google AI (Gemini 2.5 Flash)** — Subject to Google AI usage terms
-- **Optional brokers** (e.g., Google Cloud Pub/Sub, NATS, Redis) — Use under their licenses
+- **Brokers** (e.g., Google Cloud Pub/Sub, NATS, Redis) — Use under their licenses
 - Ensure environment usage complies with each provider’s T&Cs and your org policies.
 
-## 🧰 kubectl-ai and Gemini CLI (Optional)
+## 🧰 kubectl-ai and Gemini CLI
 
 - **kubectl-ai**: Use to generate manifests or scale deployments via natural language
   - Example: "scale deployment transaction-risk-agent to 3 in namespace nfrguard-agents"
 - **Gemini CLI**: Summarize logs or generate runbooks from repo context
   - Example: `gemini ask "Summarize agent topics in src/agents/shared/messaging.py"`
 
-## ☁️ GKE Deployment Guide
+## ☁️ GKE Deployment Steps Used in This Project
 
 1. Build and push images (replace `PROJECT_ID`):
    ```bash
@@ -739,19 +739,10 @@ agents/
    kubectl apply -f src/agents/k8s/agents.yaml
    # kubectl apply -f src/agents/k8s/mcp-server.yaml   # future MCP server (not implemented)
    ```
-3. (Optional) Expose public demo via Ingress (edit `agents.yaml` Ingress block and set DNS)
+3. Expose public demo via Ingress (edit `agents.yaml` Ingress block and set DNS)
 4. Get service endpoints:
    ```bash
    kubectl -n nfrguard-agents get svc
    ```
 5. Configure env for external broker if used:
    - Set `PUBSUB_BROKER_URL` in `nfrguard-agents-config` ConfigMap
-
-## 🎬 Demo Video Guidance
-
-- Storyboard: Transaction flow (Risk→Compliance→Resilience), Sentiment and Privacy flows, Knowledge alerts
-- Show logs from `shared/messaging.py` (publish/subscribe), then UI/API response
-- Close with architecture and "Why Pub/Sub for Agent Communication" slide
-
-
-
