@@ -746,3 +746,5 @@ agents/
    ```
 5. Configure env for external broker if used:
    - Set `PUBSUB_BROKER_URL` in `nfrguard-agents-config` ConfigMap
+  
+     
