@@ -138,10 +138,6 @@ bash scripts/07-cleanup-aws-resources.sh
 - ✅ **Documentation**: Numbered 00-17 for easy reading
 - ✅ **Scripts**: Numbered 01-07 for execution order
 - ✅ **Professional**: Ready for presentation and sharing
-
-### 🏗️ **Architecture**
-<img width="1172" height="731" alt="Fintech-AI-AWS-Solution-Architecture" src="https://github.com/user-attachments/assets/a452a3d3-c069-4281-bcf0-18de6da70082" />
-
 ---
 
 ## 📁 **Project Structure**
