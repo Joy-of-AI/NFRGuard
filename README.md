@@ -1,11 +1,16 @@
-<!-- Checks badge below seem to take a "neutral" check as a negative and shows failures if some checks are neutral. Commenting out the badge for now. -->
-<!-- ![GitHub branch check runs](https://img.shields.io/github/check-runs/GoogleCloudPlatform/bank-of-anthos/main) -->
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fcymbal-bank.fsi.cymbal.dev%2F&label=live%20demo
-)](https://cymbal-bank.fsi.cymbal.dev)
+# 🏦 Fintech AI AWS - Banking Security System
 
-## 🛡️ NFRGuard AI Banking Security System
+**AI-Powered Banking Security on AWS EKS**
 
-This project extends Bank of Anthos with **7 specialized AI agents** powered by **Gemini 2.5 Flash** that provide real-time fraud detection, compliance monitoring, and customer protection. It's like having a team of expert security professionals who never sleep, never make mistakes, and get smarter over time.
+This project (`fintech-ai-aws`) extends Bank of Anthos with **7 specialized AI agents** powered by **AWS Bedrock Claude 3.5 Sonnet** that provide real-time fraud detection, compliance monitoring, and regulatory guidance. Built entirely on AWS services (EKS, Bedrock, EventBridge, OpenSearch), it demonstrates enterprise-grade AI security for banking operations.
+
+### 🎯 **Project: Fintech-AI-AWS**
+- **Repository**: `Fintech_AI_AWS`
+- **Platform**: Amazon Web Services (AWS)
+- **Region**: ap-southeast-2 (Sydney, Australia)
+- **Cluster**: Amazon EKS with spot instances
+- **AI**: AWS Bedrock (Claude 3.5 Sonnet + Titan Embeddings)
+- **Status**: Production-ready, professionally organized
 
 ### 🤖 **AI Agents Included**
 - **Transaction Risk Agent** - Detects suspicious transactions in real-time
@@ -16,30 +21,145 @@ This project extends Bank of Anthos with **7 specialized AI agents** powered by 
 - **Knowledge Agent** - Generates human-readable reports
 - **Banking Assistant** - Provides automated customer service
 
-### 📚 **Complete Documentation**
-- **[Architecture Overview](src/agents/01-Architecture-Overview.md)** - How the AI agents work together
-- **[Deployment & Operations](src/agents/04-Deployment-Operations.md)** - Deploy to Google Cloud in minutes
-- **[Demo & Presentation](src/agents/03-Demo-Presentation.md)** - Create compelling demos
-- **[Technical Implementation](src/agents/05-Technical-Implementation.md)** - Deep dive into the code
-- **[Monitoring & Observability](src/agents/02-Monitoring-Observability.md)** - Keep your system healthy
-- **[Project Summary](src/agents/PROJECT_SUMMARY.md)** - Complete project overview
-- **[Architecture Diagram](src/agents/ARCHITECTURE_DIAGRAM.md)** - Visual system design
+### 📚 **Documentation** (All Numbered 00-17 for Easy Reading)
 
-### 🚀 **Quick Start**
-1. **Deploy Bank of Anthos:** Follow the [Deployment Guide](src/agents/04-Deployment-Operations.md)
-2. **Run AI Agents:** `python src/agents/demo/enhanced_database_monitor.py`
-3. **View Live Demo:** http://34.40.211.236
+**🎯 Start Here:**
+- **[00-START-HERE](src/agents/docs/reference/00-START-HERE.md)** ← **Read this first!**
+- **[09-Getting-Started](src/agents/docs/reference/09-Getting-Started.txt)** - Quick reference card
+- **[10-Quick-Reference](src/agents/docs/reference/10-Quick-Reference.txt)** - Command cheat sheet
+
+**📖 Complete Guide (Read in Order 01-17):**
+
+**Architecture (01-02):**
+- 01️⃣ **[Architecture Overview](src/agents/docs/architecture/01-Architecture-Overview.md)** - System design & 7 agents
+- 02️⃣ **[Agent Communication](src/agents/docs/architecture/02-Agent-Communication.md)** - EventBridge & 768-dim vectors
+
+**Deployment (03-05):**
+- 03️⃣ **[Quick Resume](src/agents/docs/deployment/03-Quick-Resume-Guide.md)** - Resume paused cluster (2 min)
+- 04️⃣ **[Deployment Operations](src/agents/docs/deployment/04-Deployment-Operations.md)** - Operations guide
+- 05️⃣ **[Complete Deployment](src/agents/docs/deployment/05-Complete-Deployment-Guide.md)** - Full setup + troubleshooting
+
+**Technical (06-08):**
+- 06️⃣ **[Monitoring](src/agents/docs/technical/06-Monitoring-Observability.md)** - CloudWatch & system health
+- 07️⃣ **[Technical Implementation](src/agents/docs/technical/07-Technical-Implementation.md)** - Code deep dive
+- 08️⃣ **[RAG System](src/agents/docs/technical/08-RAG-System-Guide.md)** - 42 regulatory documents
+
+**Reference (11-17):**
+- 11️⃣ **[Changelog](src/agents/docs/reference/11-Changelog.txt)** - Recent changes
+- 12️⃣ **[Complete Answers](src/agents/docs/reference/12-Complete-Answers.md)** - Technical Q&A
+- 13️⃣ **[Demo Presentation](src/agents/docs/reference/13-Demo-Presentation.md)** - Demo scripts
+- 14️⃣ **[Deployment Status](src/agents/docs/reference/14-Deployment-Status.md)** - Current system status
+- And 3 more reference docs...
+
+### 🚀 **Quick Start - AWS EKS Deployment**
+
+**First Time Setup (~30 minutes):**
+```bash
+cd src/agents
+
+# Automated setup (recommended)
+python scripts/01-complete-setup.py
+
+# OR Manual step-by-step
+# See: src/agents/docs/deployment/05-Complete-Deployment-Guide.md
+```
+
+**Daily Use (2 minutes):**
+```bash
+cd src/agents
+
+# Resume paused cluster
+bash scripts/06-resume-cluster.sh
+
+# Test agents
+kubectl port-forward -n nfrguard-agents svc/banking-assistant-agent 8080:8080
+```
+
+**When Done:**
+```bash
+# Pause (recommended) - ~$2.40/day
+bash scripts/05-pause-cluster.sh
+
+# OR Delete everything - $0/day
+bash scripts/07-cleanup-aws-resources.sh
+```
 
 ### 🎯 **Key Features**
-- **Real-time Fraud Detection** - AI agents analyze every transaction in milliseconds
-- **Automated Compliance** - Ensures 100% AUSTRAC compliance with Australian banking regulations
+- **Real-time Fraud Detection** - AI agents analyze every transaction using Claude 3.5 Sonnet
+- **AWS Bedrock Integration** - Enterprise-grade AI with AWS security and scalability
+- **EKS Deployment** - Production-ready Kubernetes on AWS with spot instances
+- **Automated Compliance** - Ensures AUSTRAC compliance with Australian banking regulations
 - **Customer Sentiment Analysis** - Detects customer frustration and escalates to support
 - **Privacy Protection** - Automatically detects and sanitizes personal information in logs
-- **Proactive Customer Service** - AI handles routine inquiries and escalates complex issues
+- **Pause/Resume** - Save costs by pausing when not in use (2-minute resume)
 - **Multi-agent Coordination** - 7 agents work together using event-driven architecture
 
-### Solution Architect
-<img width="1172" height="731" alt="Bank-of-Anthos-Solution-Design" src="https://github.com/user-attachments/assets/a452a3d3-c069-4281-bcf0-18de6da70082" />
+### 💰 **Cost Management**
+- **Running**: ~$0.10/hour (~$2.40/day) with spot instances
+- **Paused**: ~$0.10/hour (pods at 0, cluster active)
+- **Deleted**: $0/day (nothing running)
+
+### 🧠 **RAG System (Optional)**
+- **42 Regulatory Documents** - ASIC, APRA, AUSTRAC, AFCA
+- **Mock RAG** - $0 cost, keyword search, citations included
+- **Full RAG** - OpenSearch Serverless + Titan Embeddings (~$700/mo)
+- **See**: `src/agents/RAG/DEPLOY_RAG_DECISION.md` for deployment options
+
+### ☁️ **AWS Services Used**
+
+**Core Infrastructure:**
+- **Amazon EKS** - Kubernetes cluster (`fintech-ai-aws-cluster`)
+- **Amazon EC2** - Spot instances (t3.large) for cost optimization
+- **Amazon ECR** - Docker image registry (7 agent images)
+- **Amazon VPC** - Network isolation and security
+
+**AI & Machine Learning:**
+- **AWS Bedrock** - Claude 3.5 Sonnet (LLM for agents)
+- **AWS Bedrock** - Titan Embeddings V2 (768-dim vectors for RAG)
+- **Amazon OpenSearch Serverless** - Vector database (optional, for RAG)
+
+**Integration & Messaging:**
+- **AWS EventBridge** - Event-driven agent communication
+- **AWS SNS** - Fallback messaging system
+- **AWS IAM** - Role-based access control (IRSA)
+
+**Storage (Optional):**
+- **Amazon S3** - Document and artifact storage
+- **Amazon DynamoDB** - State management
+
+### 📋 **Current Status**
+- ✅ **Deployed**: AWS EKS cluster in `ap-southeast-2` (Sydney)
+- ✅ **Agents**: 13 pods (7 AI agents) - Currently paused
+- ✅ **Application**: Bank of Anthos integrated with AI agents
+- ✅ **AI**: Claude 3.5 Sonnet working via AWS Bedrock
+- ✅ **Communication**: AWS EventBridge event-driven architecture
+- ✅ **RAG System**: 42 Australian regulatory documents ready
+- ✅ **Mock RAG**: Tested and working ($0 cost)
+- ✅ **Documentation**: Numbered 00-17 for easy reading
+- ✅ **Scripts**: Numbered 01-07 for execution order
+- ✅ **Professional**: Ready for presentation and sharing
+
+### 🏗️ **Architecture**
+<img width="1172" height="731" alt="Fintech-AI-AWS-Solution-Architecture" src="https://github.com/user-attachments/assets/a452a3d3-c069-4281-bcf0-18de6da70082" />
+
+---
+
+## 📁 **Project Structure**
+
+```
+Fintech_AI_AWS/
+└── bank-of-anthos/
+    └── src/agents/              ← Security AI Agents
+        ├── agents/              7 AI agent implementations
+        ├── docs/                Documentation (numbered 00-17)
+        ├── RAG/                 42 regulatory documents
+        ├── scripts/             Automation (numbered 01-07)
+        ├── shared/              AWS libraries (Bedrock, EventBridge)
+        ├── k8s/                 Kubernetes manifests
+        └── tests/               Integration tests
+```
+
+---
 
 ##
 
