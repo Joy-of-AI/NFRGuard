@@ -28,6 +28,7 @@ export AWS_ACCOUNT_ID=491085381971
 export AWS_REGION=ap-southeast-2
 
 # AWS Credentials (Alternative to AWS CLI configuration)
+# Note: These are placeholder examples - replace with your actual credentials
 export AWS_ACCESS_KEY_ID=YOUR_AWS_ACCESS_KEY_ID_HERE
 export AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_ACCESS_KEY_HERE
 
