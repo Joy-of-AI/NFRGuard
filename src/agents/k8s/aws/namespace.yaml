@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nfrguard-agents
+  labels:
+    name: nfrguard-agents
+    environment: production
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nfrguard-sa
+  namespace: nfrguard-agents
+  annotations:
+    # Enable IAM roles for service accounts (IRSA)
+    iam.amazonaws.com/role: arn:aws:iam::${AWS_ACCOUNT_ID}:role/nfrguard-agent-role
+

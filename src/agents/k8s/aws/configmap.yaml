@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nfrguard-config
+  namespace: nfrguard-agents
+data:
+  # AWS Configuration
+  AWS_REGION: "us-east-1"
+  BEDROCK_MODEL_ID: "anthropic.claude-3-5-sonnet-20241022-v2:0"
+  BEDROCK_EMBEDDING_MODEL: "amazon.titan-embed-text-v2:0"
+  
+  # S3 Configuration
+  S3_BUCKET_NAME: "nfrguard-documents"
+  
+  # OpenSearch Configuration
+  OPENSEARCH_ENDPOINT: "${OPENSEARCH_ENDPOINT}"
+  OPENSEARCH_INDEX: "banking-regulations"
+  
+  # EventBridge Configuration
+  EVENT_BUS_NAME: "nfrguard-event-bus"
+  USE_AWS_MESSAGING: "true"
+  
+  # Agent Configuration
+  ANOMALY_THRESHOLD: "0.8"
+  AUSTRAC_THRESHOLD: "10000"
+  MSG_MAX_RETRIES: "3"
+  MSG_RETRY_DELAY_SEC: "0.05"
+  
+  # Logging
+  LOG_LEVEL: "INFO"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: opensearch-config
+  namespace: nfrguard-agents
+type: Opaque
+stringData:
+  endpoint: "${OPENSEARCH_ENDPOINT}"
+  collection-id: "${OPENSEARCH_COLLECTION_ID}"
+

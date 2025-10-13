@@ -1,0 +1,130 @@
+================================================================================
+  NFRGuard AI Agents - Quick Start Guide
+  Created: October 12, 2025
+================================================================================
+
+TONIGHT - CHOOSE ONE OPTION:
+================================================================================
+
+Option 1: PAUSE (Recommended - Balance of cost/convenience)
+-----------------------------------------------------------
+Windows:    Double-click: PAUSE_TONIGHT.bat
+Git Bash:   bash scripts/pause_cluster.sh
+
+Cost:       ~$2.40 overnight
+Tomorrow:   Quick 2-minute resume
+
+
+Option 2: KEEP RUNNING (Easiest tomorrow)
+------------------------------------------
+Action:     Do nothing!
+Cost:       ~$2.40 overnight  
+Tomorrow:   Just continue testing
+
+
+Option 3: DELETE EVERYTHING (Zero cost)
+----------------------------------------
+Git Bash:   echo "yes" | bash scripts/cleanup_aws_resources.sh
+
+Cost:       $0 overnight
+Tomorrow:   15 minutes to rebuild everything
+
+
+================================================================================
+TOMORROW - RESUME:
+================================================================================
+
+If you PAUSED (Option 1):
+-------------------------
+Windows:    Double-click: RESUME_TOMORROW.bat
+Git Bash:   bash scripts/resume_cluster.sh
+
+Wait 2 minutes, then you're ready!
+
+
+If you DELETED (Option 3):
+---------------------------
+Git Bash:   python scripts/complete_setup.py
+
+This automates everything (~30 minutes total):
+  - Creates EKS cluster
+  - Sets up permissions
+  - Builds images
+  - Deploys everything
+
+
+================================================================================
+WHAT'S BEEN SAVED:
+================================================================================
+
+✅ All Code Fixes Applied:
+   - Agent class fixed (BedrockAgent)
+   - /ready endpoint added
+   - Bedrock model updated to working version
+   - IAM permissions configured
+
+✅ Documentation Updated:
+   - RESTART_GUIDE.md      (Complete manual guide)
+   - TOMORROW_START_HERE.md (Detailed tomorrow guide)
+   - NEXT_STEPS.md         (What to do after setup)
+
+✅ Automation Scripts Created:
+   - PAUSE_TONIGHT.bat           (Windows pause)
+   - RESUME_TOMORROW.bat         (Windows resume)
+   - scripts/pause_cluster.sh    (Bash pause)
+   - scripts/resume_cluster.sh   (Bash resume)
+   - scripts/complete_setup.py   (Full automation)
+
+✅ Current Deployment Status:
+   - 13 agent pods running
+   - Bank of Anthos deployed
+   - All fixes applied
+   - Everything tested and working
+
+
+================================================================================
+QUICK TEST (Tomorrow after resume):
+================================================================================
+
+Test an AI Agent:
+-----------------
+kubectl port-forward -n nfrguard-agents svc/banking-assistant-agent 8080:8080
+
+In another terminal:
+curl -X POST http://localhost:8080/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "What services do you provide?"}'
+
+
+Access Bank of Anthos:
+-----------------------
+Get URL: kubectl get svc frontend
+Open in browser: http://<EXTERNAL-IP>
+
+
+================================================================================
+FILES TO READ TOMORROW:
+================================================================================
+
+1. TOMORROW_START_HERE.md  <- START HERE!
+2. RESTART_GUIDE.md        <- If you need detailed steps
+3. NEXT_STEPS.md           <- After everything is running
+
+
+================================================================================
+YOUR CURRENT SETUP:
+================================================================================
+
+Cluster:    fintech-ai-aws-cluster
+Region:     ap-southeast-2 (Sydney)
+Agents:     13 pods (7 different agents)
+App:        Bank of Anthos with frontend
+Status:     ✅ All working and tested
+
+
+================================================================================
+
+🎊 YOU'RE ALL SET! CHOOSE YOUR OPTION AND SEE YOU TOMORROW! 🌟
+
+================================================================================
+

@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from document_downloader import AustralianBankingDocumentDownloader, RegulatoryDocument
-from vertex_ai_vector_search import VertexAIVectorSearch, VectorDocument, SearchResult
+from aws_rag_engine import AWSRAGEngine, DocumentChunk, SearchResult
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

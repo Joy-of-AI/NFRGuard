@@ -7,6 +7,13 @@ import time
 from typing import Dict, Callable, List, Optional
 from collections import defaultdict
 
+# AWS EventBridge messaging (new)
+try:
+    from .aws_messaging import AWSMessaging, get_messaging
+    AWS_MESSAGING_AVAILABLE = True
+except ImportError:
+    AWS_MESSAGING_AVAILABLE = False
+
 # -----------------------------
 # Configuration (env-driven)
 # -----------------------------
@@ -18,7 +25,10 @@ RETRY_DELAY_SEC = float(os.getenv("MSG_RETRY_DELAY_SEC", "0.05"))
 # Back-compat var for simple HTTP broker
 HTTP_BROKER_URL = os.getenv("LOCAL_BROKER_URL") or os.getenv("PUBSUB_BROKER_URL")
 
-# Global subscription registry
+# Use AWS messaging if available and configured
+USE_AWS_MESSAGING = os.getenv("USE_AWS_MESSAGING", "false").lower() == "true" and AWS_MESSAGING_AVAILABLE
+
+# Global subscription registry (fallback for local mode)
 _subscribers: Dict[str, List[Callable]] = defaultdict(list)
 _lock = threading.Lock()
 
@@ -75,6 +85,20 @@ def publish(topic: str, message: Dict) -> None:
     payload = json.dumps(message)
     print(f"[PUB] topic={topic} payload={payload}")
 
+    # Use AWS EventBridge if available and configured
+    if USE_AWS_MESSAGING:
+        try:
+            messaging = get_messaging()
+            success = messaging.publish(topic, message)
+            if success:
+                print(f"[PUB] Published to AWS EventBridge: {topic}")
+                return
+            else:
+                print(f"[PUB] AWS EventBridge failed, falling back to local mode")
+        except Exception as e:
+            print(f"[PUB] AWS EventBridge error: {e}, falling back to local mode")
+
+    # Fallback to local messaging
     # Persist for audit/replay
     _persist_event(topic, message)
 
@@ -120,6 +144,18 @@ def subscribe(topic: str, handler_func: Callable[[Dict], Optional[bool]]):
       - return False for NACK (will be retried)
       - raise Exception to signal failure (will be retried)
     """
+    # Use AWS EventBridge if available and configured
+    if USE_AWS_MESSAGING:
+        try:
+            messaging = get_messaging()
+            success = messaging.subscribe(topic, handler_func)
+            if success:
+                print(f"[SUB] Subscribed to AWS EventBridge: {topic}")
+                return
+        except Exception as e:
+            print(f"[SUB] AWS EventBridge error: {e}, falling back to local mode")
+    
+    # Fallback to local subscription
     with _lock:
         _subscribers[topic].append(handler_func)
     print(f"[SUB] Subscribed to topic: {topic}")
