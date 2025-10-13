@@ -15,4 +15,3 @@ git gc --prune=now --aggressive
 
 echo "Done! Now you can push:"
 echo "git push origin main --force"
-

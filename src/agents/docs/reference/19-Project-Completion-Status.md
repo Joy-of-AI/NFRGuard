@@ -72,20 +72,13 @@
 07-cleanup-aws-resources.sh         Delete everything
 ```
 
-### **4. GCP Removed (100%)** ✅
-- Deleted 30 GCP files
-- Updated all Pub/Sub → EventBridge
-- Updated all Gemini → Claude
-- Updated all Vertex AI → OpenSearch
-- Pure AWS implementation
-
-### **5. RAG System** ✅
+### **4. RAG System** ✅
 - 42 Australian regulatory documents (ASIC, APRA, AUSTRAC, AFCA)
 - Mock RAG engine (tested, $0 cost)
 - Full RAG option (OpenSearch, $700/mo)
 - k-NN search algorithm (perfect for dataset)
 
-### **6. All Bugs Fixed** ✅
+### **5. All Bugs Fixed** ✅
 - NameError: Agent not defined
 - Pods not Ready (missing /ready endpoint)
 - Bedrock model validation error
